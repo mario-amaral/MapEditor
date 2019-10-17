@@ -10,24 +10,81 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 public class HeadCell implements KeyboardHandler {
 
     private Color CONTOUR_COLOR = Color.BLUE;
-    private Rectangle headCell;
+    private Rectangle headCellShape;
     private final int CELL_PADDING = 10;
 
     private int col;
     private int row;
+    private int cellSize;
+    private int cols;
+    private int rows;
 
-    public HeadCell(int col, int row, int cellSize) {
+    public HeadCell(int col, int row, int cellSize, int cols, int rows) {
         this.col = col;
         this.row = row;
+        this.cellSize = cellSize;
+        this.cols = cols;
+        this.rows = rows;
 
-        headCell = new Rectangle(CELL_PADDING + col*cellSize, CELL_PADDING + row*cellSize, cellSize, cellSize );
-        headCell.setColor(CONTOUR_COLOR);
-        headCell.draw();
+        headCellShape = new Rectangle(CELL_PADDING + col*cellSize, CELL_PADDING + row*cellSize, cellSize, cellSize );
+//        headCellShape.setColor(CONTOUR_COLOR);
+//        headCellShape.draw();
+        keyBoardInit();
     }
 
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void draw(){
+        headCellShape.setColor(CONTOUR_COLOR);
+        headCellShape.draw();
+    }
+
+    @Override
+    public void keyPressed(KeyboardEvent keyboardEvent) {
+
+        switch (keyboardEvent.getKey()){
+            case KeyboardEvent.KEY_UP:
+                if((row)*cellSize < CELL_PADDING){
+                    break;
+                }
+                row--;
+                headCellShape.translate(0, -cellSize);
+                System.out.println("Head cell » " + col + ", " + row + "." );
+                break;
+            case KeyboardEvent.KEY_DOWN:
+                if((row)*cellSize > (rows-1)*cellSize-CELL_PADDING ){
+                    break;
+                }
+                row++;
+                headCellShape.translate(0, cellSize);
+                System.out.println("Head cell » " + col + ", " + row + "." );
+                break;
+            case KeyboardEvent.KEY_LEFT:
+                if((col)*cellSize < CELL_PADDING){
+                    break;
+                }
+                col--;
+                headCellShape.translate(-cellSize,0);
+                System.out.println("Head cell » " + col + ", " + row + "." );
+                break;
+            case KeyboardEvent.KEY_RIGHT:
+                if((col)*cellSize > (cols-1)*cellSize - CELL_PADDING){
+                    break;
+                }
+                col++;
+                headCellShape.translate(cellSize,0);
+                System.out.println("Head cell » " + col + ", " + row + "." );
+                break;
+        }
+    }
 
     public void keyBoardInit() {
-
 
         Keyboard keyboard = new Keyboard(this);
 
@@ -62,47 +119,8 @@ public class HeadCell implements KeyboardHandler {
     }
 
 
-
-    @Override
-    public void keyPressed(KeyboardEvent keyboardEvent) {
-
-        switch (keyboardEvent.getKey()){
-            case KeyboardEvent.KEY_UP:
-                moveUp = true;
-                moveDown = false;
-//                yf = super.getY();
-//                super.getPaddle().translate(0,yf-yi);
-                break;
-            case KeyboardEvent.KEY_DOWN:
-                moveDown = true;
-                moveUp = false;
-//                yf = super.getY();
-//                super.getPaddle().translate(0,yf-yi);
-                break;
-            case KeyboardEvent.KEY_LEFT:
-                moveUp = true;
-                moveDown = false;
-//                yf = super.getY();
-//                super.getPaddle().translate(0,yf-yi);
-                break;
-            case KeyboardEvent.KEY_RIGHT:
-                moveUp = true;
-                moveDown = false;
-//                yf = super.getY();
-//                super.getPaddle().translate(0,yf-yi);
-                break;
-        }
-
-    }
-
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
-    }
-
-    public void move(){
-
-        switch ()
 
     }
 }
